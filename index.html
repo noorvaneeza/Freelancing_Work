@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Project Tracker</h1>
+
+  <!-- Form to Add/Edit Project -->
+  <form id="form">
+    <input type="hidden" id="projId">
+    <input type="text" id="name" placeholder="Project Name" required>
+    <input type="date" id="startDate" placeholder="Start Date">
+    <input type="date" id="endDate" placeholder="End Date">
+    <input type="number" id="days" placeholder="Days Taken">
+    <select id="status">
+      <option value="ongoing">Ongoing</option>
+      <option value="completed">Completed</option>
+    </select>
+    <input type="number" id="payment" placeholder="Payment">
+    <button id="saveBtn">Save Project</button>
+  </form>
+
+  <!-- Project List -->
+  <ul id="projectList"></ul>
+
+  <!-- Security Card: Set Password -->
+  <div id="securityCard">
+    <h3>Security Card</h3>
+    <input type="password" id="pwSet" placeholder="Set/Edit Password">
+    <button id="pwSetBtn">Set Password</button>
+  </div>
+
+  <!-- Export / Import JSON -->
+  <div id="exportImportCard">
+    <h3>Export / Import Projects</h3>
+    <button id="exportBtn">Export Projects (JSON)</button>
+    <input type="file" id="importInput" accept=".json" style="display:none">
+    <button id="importBtn">Import Projects (JSON)</button>
+  </div>
+
+  <!-- Password Modal -->
+  <div id="pwModal" class="hidden">
+    <div class="modalContent">
+      <p>Enter Password to Continue:</p>
+      <input type="password" id="pwConfirm">
+      <button id="pwConfirmBtn">Confirm</button>
+      <button id="pwCancelBtn">Cancel</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
