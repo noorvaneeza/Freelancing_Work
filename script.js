@@ -7,6 +7,7 @@ const endDateInput=document.getElementById("endDate");
 const daysInput=document.getElementById("days");
 const statusInput=document.getElementById("status");
 const paymentInput=document.getElementById("payment");
+const paymentDateInput=document.getElementById("paymentDate");
 const saveBtn=document.getElementById("saveBtn");
 const clearBtn=document.getElementById("clearBtn");
 const projIdInput=document.getElementById("projId");
@@ -43,7 +44,10 @@ function renderProjects(){
     div.className="project-card";
     div.innerHTML=`
       <div class="project-title">${escapeHtml(p.name)}</div>
-      <div class="project-meta">${p.startDate||'-'} → ${p.endDate||'-'} · ${p.days} day(s)</div>
+      <div class="project-meta">
+        ${p.startDate||'-'} → ${p.endDate||'-'} · ${p.days} day(s)
+        ${p.paymentDate ? ` · Paid on: ${p.paymentDate}` : ''}
+      </div>
       <div class="project-status ${p.status}">${capitalize(p.status)}</div>
     `;
     listEl.appendChild(div);
@@ -77,8 +81,9 @@ async function addProject(){
   let days=Number(daysInput.value)||0;
   const s=startDateInput.value; const e=endDateInput.value;
   if(!days&&s&&e){days=Math.floor((new Date(e)-new Date(s))/(1000*60*60*24))+1; if(days<0)days=0;}
-  projects.unshift({id:Date.now(),name,startDate:s||null,endDate:e||null,days,status:statusInput.value,payment:Number(paymentInput.value)||0});
-  saveProjects(); form.reset();
+  const paymentDate = paymentDateInput.value || null;
+  projects.unshift({id:Date.now(),name,startDate:s||null,endDate:e||null,days,status:statusInput.value,payment:Number(paymentInput.value)||0,paymentDate});
+  saveProjects(); form.reset(); paymentDateInput.value="";
 }
 
 saveBtn.addEventListener("click",e=>{
@@ -89,12 +94,13 @@ saveBtn.addEventListener("click",e=>{
     let days=Number(daysInput.value)||0;
     const s=startDateInput.value; const e=endDateInput.value;
     if(!days&&s&&e){days=Math.floor((new Date(e)-new Date(s))/(1000*60*60*24))+1; if(days<0)days=0;}
-    projects[idx]={id:Number(id),name:nameInput.value.trim(),startDate:s||null,endDate:e||null,days,status:statusInput.value,payment:Number(paymentInput.value)||0};
-    saveProjects(); form.reset(); projIdInput.value="";
+    const paymentDate = paymentDateInput.value || null;
+    projects[idx]={id:Number(id),name:nameInput.value.trim(),startDate:s||null,endDate:e||null,days,status:statusInput.value,payment:Number(paymentInput.value)||0,paymentDate};
+    saveProjects(); form.reset(); projIdInput.value=""; paymentDateInput.value="";
   });
 });
 
-clearBtn.addEventListener("click",()=>{form.reset(); projIdInput.value="";});
+clearBtn.addEventListener("click",()=>{form.reset(); projIdInput.value=""; paymentDateInput.value="";});
 
 // Password set
 pwSetBtn.addEventListener("click",async()=>{
