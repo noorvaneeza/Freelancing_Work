@@ -1,54 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Tracker</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Tracker — Modern</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Project Tracker</h1>
+  <div class="wrap">
+    <header class="topbar glass">
+      <div>
+        <h1>Project Tracker</h1>
+        <p class="sub">Clean • Modern • Spacious</p>
+      </div>
+      <div class="summary">
+        <div class="pill" id="totalProjects">Projects: 0</div>
+        <div class="pill" id="totalPayment">Total: $0.00</div>
+      </div>
+    </header>
 
-  <!-- Form to Add/Edit Project -->
-  <form id="form">
-    <input type="hidden" id="projId">
-    <input type="text" id="name" placeholder="Project Name" required>
-    <input type="date" id="startDate" placeholder="Start Date">
-    <input type="date" id="endDate" placeholder="End Date">
-    <input type="number" id="days" placeholder="Days Taken">
-    <select id="status">
-      <option value="ongoing">Ongoing</option>
-      <option value="completed">Completed</option>
-    </select>
-    <input type="number" id="payment" placeholder="Payment">
-    <button id="saveBtn">Save Project</button>
-  </form>
+    <main class="grid">
+      <!-- Left column -->
+      <section class="card left-card">
+        <h2>Add / Edit Project</h2>
 
-  <!-- Project List -->
-  <ul id="projectList"></ul>
+        <form id="form" autocomplete="off">
+          <input type="hidden" id="projId" />
 
-  <!-- Security Card: Set Password -->
-  <div id="securityCard">
-    <h3>Security Card</h3>
-    <input type="password" id="pwSet" placeholder="Set/Edit Password">
-    <button id="pwSetBtn">Set Password</button>
-  </div>
+          <label class="label">Project Name</label>
+          <input type="text" id="name" placeholder="Project Name" required />
 
-  <!-- Export / Import JSON -->
-  <div id="exportImportCard">
-    <h3>Export / Import Projects</h3>
-    <button id="exportBtn">Export Projects (JSON)</button>
-    <input type="file" id="importInput" accept=".json" style="display:none">
-    <button id="importBtn">Import Projects (JSON)</button>
+          <div class="row">
+            <div class="col">
+              <label class="label">Start Date</label>
+              <input type="date" id="startDate" />
+            </div>
+            <div class="col">
+              <label class="label">End Date</label>
+              <input type="date" id="endDate" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="label">Days Taken</label>
+              <input type="number" id="days" min="0" placeholder="Auto or type" />
+            </div>
+            <div class="col">
+              <label class="label">Status</label>
+              <select id="status">
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="label">Payment (USD)</label>
+          <input type="number" id="payment" min="0" step="0.01" placeholder="e.g. 150.00" />
+
+          <div class="actions">
+            <button id="saveBtn" type="submit">Save Project</button>
+            <button id="clearBtn" type="button" class="muted">Clear</button>
+          </div>
+        </form>
+
+        <hr/>
+
+        <h3 class="muted">Security</h3>
+        <div class="security-row" style="display:flex; gap:10px; margin-top:6px;">
+          <input type="password" id="pwSet" placeholder="Set/Edit Password" />
+          <button id="pwSetBtn">Set</button>
+        </div>
+      </section>
+
+      <!-- Right column: projects grid -->
+      <section class="card right-card">
+        <h2>Your Projects</h2>
+        <div id="projectList" class="projects-grid"></div>
+      </section>
+    </main>
   </div>
 
   <!-- Password Modal -->
-  <div id="pwModal" class="hidden">
-    <div class="modalContent">
-      <p>Enter Password to Continue:</p>
-      <input type="password" id="pwConfirm">
-      <button id="pwConfirmBtn">Confirm</button>
-      <button id="pwCancelBtn">Cancel</button>
+  <div id="pwModal" class="modal hidden">
+    <div class="modalBox">
+      <h3>Enter Password</h3>
+      <input type="password" id="pwConfirm" placeholder="Password" style="width:100%;margin-top:12px" />
+      <div style="display:flex; gap:10px; margin-top:14px;">
+        <button id="pwConfirmBtn" style="flex:1">Confirm</button>
+        <button id="pwCancelBtn" class="muted" style="flex:1">Cancel</button>
+      </div>
     </div>
   </div>
 
