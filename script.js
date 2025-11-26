@@ -49,8 +49,30 @@ function renderProjects(){
         ${p.paymentDate ? ` · Paid on: ${p.paymentDate}` : ''}
       </div>
       <div class="project-status ${p.status}">${capitalize(p.status)}</div>
+      <div class="actions" style="margin-top:6px;">
+        <button class="edit-btn" data-id="${p.id}">Edit</button>
+      </div>
     `;
     listEl.appendChild(div);
+  });
+
+  // Edit button functionality
+  document.querySelectorAll(".edit-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const id = btn.getAttribute("data-id");
+      const proj = projects.find(p=>p.id==id);
+      if(!proj){alert("Project not found"); return;}
+      // Fill form with project data
+      projIdInput.value = proj.id;
+      nameInput.value = proj.name;
+      startDateInput.value = proj.startDate || "";
+      endDateInput.value = proj.endDate || "";
+      daysInput.value = proj.days || "";
+      statusInput.value = proj.status;
+      paymentInput.value = proj.payment || "";
+      paymentDateInput.value = proj.paymentDate || "";
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
   });
 }
 
@@ -58,7 +80,7 @@ function renderProjects(){
 function updateSummary(){
   totalProjectsEl.textContent=`Projects: ${projects.length}`;
   const sum=projects.reduce((acc,p)=> acc+(Number(p.payment)||0),0);
-  totalPaymentEl.textContent=`Total: $${sum.toFixed(2)}`;
+  totalPaymentEl.textContent=`Total: ${sum.toFixed(2)}`; // No $ symbol, just number
 }
 
 // Auth Modal
